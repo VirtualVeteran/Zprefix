@@ -16,7 +16,7 @@ app.get('/user', async (request, response) => {
     knex('user_account')
     .select('*')
     .then(data => {
-        var userNames = data.map(user => user.username); // Change user_account to data
+        var userNames = data.map(user => user.username); 
         response.json(userNames);
     })
     .catch(error => {
@@ -24,6 +24,29 @@ app.get('/user', async (request, response) => {
         response.status(500).json({ error: 'Failed to fetch user accounts' });
     });
 });
+
+
+app.get('/inventory', async (request, response) => {
+    knex('inventory_stock')
+    .select('*')
+    .then(data => {
+        var inventoryNames = data.map(inventory => inventory.name); 
+        response.json(inventoryNames);
+    })
+    .catch(error => {
+        console.error('Error fetching user accounts:', error);
+        response.status(500).json({ error: 'Failed to fetch user accounts' });
+    });
+});
+
+
+
+
+
+
+
+
+
 // app.get('/launches', async (req, res) => {
 //     const allLaunches = await knex('launch').select('*');
 
