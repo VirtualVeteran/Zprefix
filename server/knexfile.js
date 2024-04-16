@@ -6,13 +6,13 @@
 module.exports = {
 
   development: {
-    client: 'postgresql',
+    client: 'pg',
     connection: {
       host: '127.0.0.1',
       password: 'docker',
       user: 'postgres',
       port: 5432,
-      database: ' inventory_database'
+      database: 'inventory_database'
 
     }
   },
