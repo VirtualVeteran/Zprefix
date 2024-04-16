@@ -1,13 +1,7 @@
-/**
- * @param { import("knex").Knex } knex
- * @returns { Promise<void> }
- */
+
 exports.up = function(knex) {
     return knex.schema.createTable('user_account', table => {
-      table.increments('id');
-      table.string('name');
-      table.string('address');
-      table.string('email');
+      table.increments('');
       table.string('username');
       table.string('password')
   })
