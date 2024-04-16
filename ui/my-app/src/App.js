@@ -5,7 +5,7 @@ function App() {
   
   const showInventory = async () => {
     try {
-        const response = await fetch(`https://localhost:8080/inventory`);
+        const response = await fetch(`https://localhost:8081/inventory`);
         if (!response.ok) {
             throw new Error('Failed to fetch inventory');
         }
