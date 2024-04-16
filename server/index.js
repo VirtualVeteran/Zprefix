@@ -25,16 +25,14 @@ app.get('/user', async (request, response) => {
     });
 });
 
-
 app.get('/inventory', async (request, response) => {
     knex('inventory_stock')
     .select('*')
     .then(data => {
-        var inventoryItemNames = data.map(inventory => inventory.itemname); 
-        response.json(inventoryItemNames);
+        response.json(data);
     })
     .catch(error => {
-        console.error('Error fetching inventory item names:', error);
+        console.error('Error fetching inventory:', error);
         response.status(500).json({ error: 'Failed to fetch inventory' });
     });
 });
@@ -44,12 +42,3 @@ app.get('/inventory', async (request, response) => {
 
 
 
-
-
-
-// app.get('/launches', async (req, res) => {
-//     const allLaunches = await knex('launch').select('*');
-
-
-//     res.status(200).json('All the launches')
-// });
