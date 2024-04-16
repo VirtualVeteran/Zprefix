@@ -30,12 +30,12 @@ app.get('/inventory', async (request, response) => {
     knex('inventory_stock')
     .select('*')
     .then(data => {
-        var inventoryNames = data.map(inventory => inventory.name); 
-        response.json(inventoryNames);
+        var inventoryItemNames = data.map(inventory => inventory.itemname); 
+        response.json(inventoryItemNames);
     })
     .catch(error => {
-        console.error('Error fetching user accounts:', error);
-        response.status(500).json({ error: 'Failed to fetch user accounts' });
+        console.error('Error fetching inventory item names:', error);
+        response.status(500).json({ error: 'Failed to fetch inventory' });
     });
 });
 
