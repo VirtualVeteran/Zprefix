@@ -6,7 +6,7 @@ import Inventory from './Inventory.js';
 function Homepage() {
   return (
     <>
-    <h1>Inventory Updated</h1>
+  
     <Inventory />
     </>
 
