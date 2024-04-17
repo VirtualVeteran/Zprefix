@@ -22,8 +22,8 @@ const Inventory = () => {
             {
             items.map(item => {
                 return (
-                    <Col key={item.id} xs={3} style={{padding:'10px'}}>
-                        <Card className='item-card'style={{width: '250px', height: '300px'}}>
+                    <Col key={item.id} xs={3} style={{padding:'100px'}}>
+                        <Card className='item-card'style={{width: '150px', height: '200px'}}>
                             <Card.Body style={{textAlign: 'center'}}>
                                 <h5>{item.name}</h5>
                                 <h6>{item.description}</h6>
