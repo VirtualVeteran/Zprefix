@@ -1,39 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import CreateAccount from './AccountCreation.js';
+import Homepage from './Homepage.js';
+
 
 function App() {
-  const[inventory, setInventory] = useState([]);
-  
-  const showInventory = async () => {
-    try {
-        const response = await fetch(`https://localhost:8081/inventory`);
-        if (!response.ok) {
-            throw new Error('Failed to fetch inventory');
-        }
+  return (
+    <Router>
+    <Routes>
+      <Route path="/" element={<CreateAccount />} />
+    </Routes>
+        <Link to={'/Homepage'} style={{color:"black"}}>Just visiting? View Our Inventory Here!</Link>
+  </Router>
+    
 
-        const inventoryData = await response.json();
-        setInventory(inventoryData);
-        console.log("inventory", inventoryData);
-    } catch (error) {
-        console.error('Error fetching inventory:', error.message);
-    }
-};
-
-return (
-    <div>
-        <button  className="toggle-button" onClick={showInventory}>Inventory</button>
-        {inventory.length > 0 && (
-            <div>
-                {inventory.map(item => (
-                    <div key={item.id}>
-                        <p>Name: {item.itemname}</p>
-                        <p>Description: {item.description}</p>
-                        <p>Quantity: {item.quantity}</p>
-                    </div>
-                ))}
-            </div>
-        )}
-    </div>
-);
+  );
 }
 
 export default App;

@@ -2,10 +2,11 @@ const express = require("express");
 const app = express();
 const port = 8081 ;
 const knex = require('knex')(require('./knexfile.js')["development"]);
-
+const cors = require('cors');
 
 app.listen(port, () => console.log('server is running on ${port}'));
 
+app.use(cors({origin: 'http://localhost:3001'}));
 
 // user_account CRUD 
 
