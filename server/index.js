@@ -56,19 +56,22 @@ app.get('/inventory', async (request, response) => {
 });
 
 app.post('/inventory', async (req, res) => {
-    const { itemname, user_account_id, description, quantity} = req.body;
-    knex('inventory_stock')
-        .insert({itemname, user_account_id, description, quantity})
-        .then(() => {
-            res.status(201).send('item created successfully');
-        })
-        .catch(error => {
-            console.error('error creating item', error)
-            res.status(500).send('Failed to create item');
-        });
-    });
+    try {
+        const { itemname, user_account_id, description, quantity } = req.body;
     
+        await knex('inventory_stock').insert({
+            itemname,
+            user_account_id,
+            description,
+            quantity
+        });
 
+        res.status(201).send('Item created successfully');
+    } catch (error) {
+        console.error('Error creating item', error);
+        res.status(500).send('Failed to create item');
+    }
 
+});
 
 
