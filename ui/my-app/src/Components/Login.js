@@ -16,7 +16,7 @@ const Login = () => {
             if (response.ok) {
                 const data = await response.json();
                 Cookies.set('user', data.user); 
-                window.location.reload(); // Refresh the page to reflect the user's authentication status
+                window.location.reload(); 
             } else {
                 const errorMessage = await response.text();
                 setError(errorMessage);

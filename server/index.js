@@ -3,6 +3,11 @@ const app = express();
 const port = 8081 ;
 const knex = require('knex')(require('./knexfile.js')["development"]);
 const cors = require('cors');
+const bodyParser = require('body-parser');
+
+
+
+app.use(bodyParser.json());
 
 app.listen(port, () => console.log('server is running on ${port}'));
 
