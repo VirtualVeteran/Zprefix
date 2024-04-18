@@ -41,7 +41,7 @@ app.post('/user', async (req, res) => {
     }
 });
 
-app.post('/login', async (req, res) => {
+app.post('/Login', async (req, res) => {
     const { username, password } = req.body;
     try {
         const user = await knex('user_account').where({ username }).first();
@@ -73,7 +73,22 @@ app.patch('/user', async (req, res) => {
         console.error('Error creating user:', error);
         res.status(500).send('Failed to create user');
     }
+
 });
+
+
+app.delete('/user', async (req, res) => {
+    const { firstname } = req.body;
+    try {
+        await knex('user_account').where({ firstname }).del();
+        res.status(200).send('User deleted successfully');
+    } catch (error) {
+        console.error('Error deleting user:', error);
+        res.status(500).send('Failed to delete user');
+    }
+});
+
+
 
 // Inventory CRUD
 app.get('/inventory', async (req, res) => {
@@ -96,3 +111,40 @@ app.post('/inventory', async (req, res) => {
         res.status(500).send('Failed to create item');
     }
 });
+
+
+
+app.patch('/inventory', async (req, res) => {
+    try {
+        await knex('inventory_stock').insert({ itemname, user_account_id, description, quantity });
+        res.status(201).send('Item created successfully');
+    } catch (error) {
+        console.error('Error creating item:', error);
+        res.status(500).send('Failed to create item');
+    }
+});
+
+app.patch('/inventory', async (req, res) => {
+    try {
+        await knex('inventory_stock').insert({ itemname, user_account_id, description, quantity });
+        res.status(201).send('Item edited successfully');
+    } catch (error) {
+        console.error('Error editing item:', error);
+        res.status(500).send('Failed to edit item');
+    }
+});
+
+
+
+
+app.delete('/inventory', async (req, res) => {
+    const { itemname } = req.body;
+    try {
+        await knex('inventory_stock').where({ itemname }).del();
+        res.status(200).send('item deleted successfully');
+    } catch (error) {
+        console.error('Error deleting item:', error);
+        res.status(500).send('Failed to delete item');
+    }
+});
+
