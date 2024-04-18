@@ -55,7 +55,8 @@ const Container = styled.button`
 
 const CreateAccount = () => {
   const [newUser, setNewUser] = useState({
-    name: "",
+    firstname: "",
+    lastnamename: "",
     username: "",
     password: ""
   });
@@ -64,7 +65,7 @@ const CreateAccount = () => {
     event.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:8888/user', {
+      const response = await fetch('http://localhost:8000/user', {
         method: "PATCH", 
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newUser)
@@ -74,7 +75,8 @@ const CreateAccount = () => {
         throw new Error("Unable to register user");
       } else {
         setNewUser({
-          name: "",
+          firstname: "",
+          lastname: "",
           username: "",
           password: ""
         });
@@ -97,7 +99,9 @@ const CreateAccount = () => {
       <p>Please fill in this form to create an account.</p>
       <form onSubmit={handleSignUp}>
         <Label>Name</Label>
-        <InputField type="text" placeholder="Name" name="name" value={newUser.name} onChange={handleChange} />
+        <InputField type="text" placeholder="FirstName" name="firstname" value={newUser.firstname} onChange={handleChange} />
+        <Label>Name</Label>
+        <InputField type="text" placeholder="Lastname" name="lastname" value={newUser.lastname} onChange={handleChange} />
         <Label>Username</Label>
         <InputField type="text" placeholder="Username" name="username" value={newUser.username} onChange={handleChange} />
         <Label>Password</Label>

@@ -65,7 +65,7 @@ const CreateItem = () => {
     event.preventDefault();
 
     try {
-        const response = await fetch('http://localhost:8888/inventory', {
+        const response = await fetch('http://localhost:8000/inventory', {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(newItem)

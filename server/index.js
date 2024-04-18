@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const port = 8888;
+const port = 8000;
 const knex = require('knex')(require('./knexfile.js')["development"]);
 const cors = require('cors');
 const bcrypt = require('bcrypt'); 
@@ -18,6 +18,7 @@ app.get('/', (req, res) => {
 });
 
 // User CRUD
+
 app.get('/user', async (req, res) => {
     try {
         const users = await knex('user_account').select('*');
@@ -28,17 +29,29 @@ app.get('/user', async (req, res) => {
     }
 });
 
+app.post('/user', async (req, res) => {
+    const { firstname, lastname, username, password } = req.body;
+    try {
+        const hashedPassword = await bcrypt.hash(password, 10); 
+        await knex('user_account').insert({ firstname, lastname, username, password: hashedPassword });
+        res.status(201).send('User created successfully');
+    } catch (error) {
+        console.error('Error creating user:', error);
+        res.status(500).send('Failed to create user');
+    }
+});
+
 app.post('/login', async (req, res) => {
     const { username, password } = req.body;
-    try{
+    try {
         const user = await knex('user_account').where({ username }).first();
         
         if (!user) {
             return res.status(401).json({ message: 'Invalid username or password' });
         }
         
-        const passwordMatch = await bcrypt.compare(password, user.password);
-
+        const passwordMatch = await bcrypt.compare(password, user.password); 
+        
         if (passwordMatch) {
             return res.status(200).json({ message: 'Login successful', user });
         } else {
@@ -49,6 +62,7 @@ app.post('/login', async (req, res) => {
         return res.status(500).json({ message: 'Internal server error' });
     }
 });
+
 
 app.patch('/user', async (req, res) => {
     const { firstname, lastname, username, password } = req.body;
