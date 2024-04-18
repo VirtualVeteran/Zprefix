@@ -3,6 +3,9 @@ const app = express();
 const port = 8888;
 const knex = require('knex')(require('./knexfile.js')["development"]);
 const cors = require('cors');
+const bcrypt = require('bcrypt'); 
+
+app.use(express.urlencoded({ extended: true }));
 
 app.use(express.json());
 app.use(cors({ origin: 'http://localhost:3001' })); 
@@ -47,7 +50,7 @@ app.post('/login', async (req, res) => {
     }
 });
 
-app.post('/user', async (req, res) => {
+app.patch('/user', async (req, res) => {
     const { firstname, lastname, username, password } = req.body;
     try {
         await knex('user_account').insert({ firstname, lastname, username, password });
