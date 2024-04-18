@@ -1,11 +1,13 @@
-import React, { useState, useEffect, useContext, Navigate } from 'react';
-import { BrowserRouter as Router, Routes, Route, } from 'react-router-dom';
+import React, { useState, useEffect, useContext, createContext } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import { AuthApi } from './AuthApi';
 
-const AuthApi = React.createContext();
 
-function AuthenticatedLogin() {
+function AuthenticatedLogin({children}) {
   const [auth, setAuth] = useState(false);
+
+const AuthApi= createContext();
 
   useEffect(() => {
     const readCookie = () => {
@@ -19,10 +21,11 @@ function AuthenticatedLogin() {
 
   return (
     <AuthApi.Provider value={{ auth, setAuth }}>
+    {children}
       <Router>
         <Routes>
-          <ProtectedRoute path="/dashboard" component={Dashboard} auth={auth} />
-          <ProtectedLogin path="/login" component={Login} auth={auth} />
+          <Route path="/dashboard" component={Dashboard} auth={auth} />
+          <Route path="/login" component={Login} auth={auth} />
         </Routes>
       </Router>
     </AuthApi.Provider>
@@ -109,4 +112,5 @@ const ProtectedLogin = ({ component: Component, auth, ...rest }) => {
   );
 };
 
-export default AuthenticatedLogin;
+export { AuthenticatedLogin, Dashboard, Login, ProtectedRoute, ProtectedLogin };
+

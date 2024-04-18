@@ -1,16 +1,10 @@
-
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import Cookies from 'js-cookie';
 
-
-
 const Login = () => {
-    const { setAuth } = useContext(AuthApi);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-
-    const AuthApi = React.createContext();
 
     const handleLogin = async () => {
         try {
@@ -21,10 +15,9 @@ const Login = () => {
             });
             if (response.ok) {
                 const data = await response.json();
-                setAuth(true);
                 Cookies.set('user', data.user); 
+                window.location.reload(); // Refresh the page to reflect the user's authentication status
             } else {
-                // Handle authentication failure
                 const errorMessage = await response.text();
                 setError(errorMessage);
             }
