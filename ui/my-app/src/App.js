@@ -5,6 +5,7 @@ import Homepage from './Homepage.js';
 import Inventory from './Inventory.js';
 import CreateItem from './Components/CreateItem.js';
 
+
 function App() {
   return (
     <Router>
@@ -13,6 +14,7 @@ function App() {
         <Route path="/homepage" element={<Homepage />} />
         <Route path="/Inventory" element={<Inventory />} />
         <Route path="/CreateItem" element={<CreateItem />} />
+      
       </Routes>
       <Link to="/homepage" style={{ color: "black" }}>Just visiting? View Our Inventory Here!</Link> 
     </Router>
