@@ -124,7 +124,7 @@ app.patch('/inventory', async (req, res) => {
     }
 });
 
-app.patch('/inventory', async (req, res) => {
+app.post('/EditItem', async (req, res) => {
     try {
         await knex('inventory_stock').insert({ itemname, user_account_id, description, quantity });
         res.status(201).send('Item edited successfully');

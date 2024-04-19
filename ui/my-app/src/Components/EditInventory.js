@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from 'styled-components';
 
 const RegisterBox = styled.div`
@@ -54,97 +54,66 @@ const Container = styled.div`
 `;
 
 
-const EditItem = () => {
+const EditItem = ({ itemId }) => {
+    const [item, setItem] = useState({
+      itemname: '',
+      description: '',
+      quantity: ''
+    });
 
-    constructor(props){
-        super(props);
-        this.state =  {
-          itemName: '',
-          description: '',
-          quantity:'',
-          
-      };
-        this.onInputChange = this.onInputChange.bind(this);
-        this.onHandleUpdate = this.onHandleUpdate.bind(this);
-    }
-    
-    const response = await fetch('http://localhost:8000/inventory', {
-        method: "PATCH", 
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newItem)
-      });
+    useEffect(() => {
+      // Fetch item details based on itemId
+      fetch(`http://localhost:8000/EditItem/${itemId}`)
+        .then(res => res.json())
+        .then(data => {
+          setItem(data);
+        })
+        .catch(error => console.log(error));
+    }, [itemId]);
 
-      if (response.status !== 201) {
-        throw new Error("Unable to edit existing item");
-      } else {
-        setNewItem({
-          itemname: "",
-          description: "",
-          quantity: ""
-        });
-        alert("Item creation successful");
-      }
-    } catch (error) {
-      console.error("Error editing item:", error);
-      alert("Item change failed. Please try again.");
-    }
+    const handleUpdate = async (event) => {
+      event.preventDefault();
 
-   
-        
-    }
-      onInputChange(e){
-        this.setState({
-           title: ‘’, body:''
-    
-    
-        });
+      try {
+          const response = await fetch('http://localhost:8000/EditItem', {
+            method: "POST", // Change method to POST
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id: itemId, ...item }) // Include the item ID in the request payload
+          });
+
+          if (response.status !== 201) {
+              throw new Error("Unable to edit existing item");
+          } else {
+              alert("Item update successful");
+          }
+      } catch (error) {
+          console.error("Error editing item:", error);
+          alert("Item change failed. Please try again.");
       }
+    };
     
-      onHandleUpdate(e){
-        console.log(this.postId);
-        e.preventDefault();
-        database.ref('posts').child(`${this.postId}`).update(this.state); 
-        this.setState({
-          title: '',
-          body: ''    
-        });
-      }
-    
-        return (
-     
-            <Container>
-            <RegisterBox>
-              <Title>Create Item</Title>
-              <p>Please fill in this form to create a new item.</p>
-              <form onSubmit={handleSignUp}>
-                <Label>Item Name</Label>
-                <InputField type="text" placeholder="Item Name" name="itemname" value={newItem.itemname} onChange={handleChange} />
-                <Label>Description</Label>
-                <InputField type="text" placeholder="Description" name="description" value={newItem.description} onChange={handleChange} />
-                <Label>Quantity</Label>
-                <InputField type="text" placeholder="Quantity" name="quantity" value={newItem.quantity} onChange={handleChange} />
-                <Button type="submit">Create</Button>
-              </form>
-            </RegisterBox>
-          </Container>
-        );
-      }
-        
-        
-        
-    }
+    const handleChange = (event) => {
+      const { name, value } = event.target;
+      setItem({ ...item, [name]: value });
+    };
+
+    return (
+      <Container>
+        <RegisterBox>
+          <Title>Edit Item</Title>
+          <p>Please fill in this form to edit the item.</p>
+          <form onSubmit={handleUpdate}>
+            <Label>Item Name</Label>
+            <InputField type="text" placeholder="Item Name" name="itemname" value={item.itemname} onChange={handleChange} />
+            <Label>Description</Label>
+            <InputField type="text" placeholder="Description" name="description" value={item.description} onChange={handleChange} />
+            <Label>Quantity</Label>
+            <InputField type="text" placeholder="Quantity" name="quantity" value={item.quantity} onChange={handleChange} />
+            <Button type="submit">Update</Button>
+          </form>
+        </RegisterBox>
+      </Container>
+    );
+};
 
 export default EditItem;
-
-
-
-
-
-
-
-
-
-
-
-
-

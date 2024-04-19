@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Row, Col, Card } from 'react-bootstrap';
+import { Row, Col, Card, Button } from 'react-bootstrap';
+import EditItem from "./Components/EditInventory";
 
 
 const Inventory = () => {
@@ -15,25 +16,27 @@ const Inventory = () => {
             .catch(error => console.log(error));
     }, [])
 
+    const handleEditItem = (itemId) => {
+        // Handle edit item logic here
+        console.log(`Editing item with id ${itemId}`);
+    };
+
     return (
         <div>
             <h1 style={{textAlign:'center'}}>Inventory</h1>
             <Row>
-            {
-            items.map(item => {
-                return (
+                {items.map(item => (
                     <Col key={item.id} xs={3} style={{padding:'100px'}}>
-                        <Card className='item-card'style={{width: '150px', height: '200px'}}>
+                        <Card className='item-card' style={{width: '150px', height: '200px'}}>
                             <Card.Body style={{textAlign: 'center'}}>
                                 <h5>{item.itemname}</h5>
                                 <h6>{item.description}</h6>
                                 <h7>{item.quantity}</h7>
+                                <Button onClick={() => handleEditItem(item.id)}>Edit</Button>
                             </Card.Body>
                         </Card>
                     </Col>
-                )
-            })
-            }
+                ))}
             </Row>
         </div>
     )
