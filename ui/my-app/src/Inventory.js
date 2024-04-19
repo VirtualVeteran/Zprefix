@@ -10,7 +10,7 @@ const Inventory = () => {
 
 
     useEffect( () => {
-        fetch('http://localhost:8000/inventory')
+        fetch('http://localhost:3000/inventory')
             .then(res => res.json())
             .then(data => {
                 setItems(data)

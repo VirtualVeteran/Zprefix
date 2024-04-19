@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import Homepage from './Homepage.js'; 
+import ViewInventory from './ViewInventory.js';
+import Mainpage from './Mainpage.js';
 import Login from './Components/Login.js';
 import CreateAccount from './AccountCreation.js';
 
@@ -11,11 +12,12 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/create-account" element={<CreateAccount />} />
-          <Route path="/homepage" element={<Homepage />} />
+          <Route path="/view-inventory" element={<ViewInventory />} />
+          <Route path="/mainpage" element={<Mainpage />} />
         </Routes>
-        <Route path="/*" element={<Login />} />
-        <Route path="/*" element={<CreateAccount />} />
-        <Link to="/homepage" style={{ color: "black" }}>Just visiting? View Our Inventory Here!</Link>
+        <Link className='mainpage' to="/mainpage" style={{ color: "black" }}>Already have an account or need to make one?</Link>
+        <div></div>
+        <Link className='inventory' to="/view-inventory" style={{ color: "black" }}>Just visiting? View Our Inventory Here!</Link>
       </div>
     </Router>
   );

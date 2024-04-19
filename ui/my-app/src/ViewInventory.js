@@ -4,7 +4,7 @@ import Button from './Components/Button.js';
 import CreateItem from './Components/CreateItem.js';
 
 
-function Homepage() {
+function ViewInventory() {
 
     const [showCreateItem, setShowCreateItem] = useState(false);
   
@@ -20,4 +20,4 @@ function Homepage() {
   );
 }
 
-export default Homepage;
+export default ViewInventory;

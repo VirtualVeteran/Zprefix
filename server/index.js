@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const port = 8888;
+const port = 3000;
 const knex = require('knex')(require('./knexfile.js')["development"]);
 const cors = require('cors');
 const bcrypt = require('bcrypt'); 

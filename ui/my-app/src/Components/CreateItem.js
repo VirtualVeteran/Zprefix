@@ -65,7 +65,7 @@ const CreateItem = () => {
     event.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:8000/inventory', {
+      const response = await fetch('http://localhost:3000/inventory', {
         method: "PATCH", 
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newItem)
