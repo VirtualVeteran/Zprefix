@@ -34,9 +34,8 @@ const Inventory = () => {
                             <h6>{item.description}</h6>
                             <h7>{item.quantity}</h7>
                             <div></div>
-                            {/* Pass the item ID to the handleEditItem function */}
                             <Button className="edit" onClick={() => handleEditItem(item.id)}>Edit</Button> 
-                            {/* Render the EditItem component only if the item ID matches the editItemId */}
+        
                             {editItemId === item.id && <EditItem />}
                         </Card.Body>
                     </Card>

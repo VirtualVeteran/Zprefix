@@ -4,9 +4,12 @@ import ViewInventory from './ViewInventory.js';
 import Mainpage from './Mainpage.js';
 import Login from './Components/Login.js';
 import CreateAccount from './AccountCreation.js';
+import './App.css';
 
 function App() {
   return (
+    <>
+    <p className='welcome'>Welcome to SelfTrack, the inventory tracking tool!</p>
     <Router>
       <div>
         <Routes>
@@ -20,6 +23,7 @@ function App() {
         <Link className='inventory' to="/view-inventory" style={{ color: "black" }}>Just visiting? View Our Inventory Here!</Link>
       </div>
     </Router>
+    </>
   );
 }
 

@@ -1,36 +1,27 @@
 import React, { useState, useEffect } from "react";
 import styled from 'styled-components';
 
-const RegisterBox = styled.div`
-  text-align:center;
-  border: 2px solid;
+const EditBox = styled.div`
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: white;
+  background-color: rgba(255, 255, 255, 0.9); /* Background color with transparency */
   padding: 20px;
+  z-index: 1000; /* Ensure the edit box is above other elements */
 `;
 
 const Title = styled.div`
-  font-size:20px;
-  color:white;
-`;
-
-const Label = styled.div`
-  font-size:15px;
-  display:flex;
-  width:24%;
-  text-align:left;
-  padding-left: 10px;
-  color:white;
+  font-size: 20px;
+  color: #333; /* Change color as needed */
+  margin-bottom: 10px;
 `;
 
 const InputField = styled.input`
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;
-  display: inline-block;
+  display: block;
   border: 1px solid #ccc;
   box-sizing: border-box;
 `;
@@ -39,20 +30,10 @@ const Button = styled.button`
   background-color: blue;
   color: white;
   padding: 10px 20px;
-  margin: 8px 0;
+  margin-top: 10px;
   border: none;
   cursor: pointer;
-  width: 100%;
-  color: white;
 `;
-
-const Container = styled.div`
-  text-align: left;
-  background-color: #1F003E;
-  color: white;
-  border: 20px solid;
-`;
-
 
 const EditItem = ({ itemId }) => {
     const [item, setItem] = useState({
@@ -62,8 +43,8 @@ const EditItem = ({ itemId }) => {
     });
 
     useEffect(() => {
-      // Fetch item details based on itemId
-      fetch(`http://localhost:8000/EditItem/${itemId}`)
+ 
+      fetch(`http://localhost:3000/EditItem/${itemId}`)
         .then(res => res.json())
         .then(data => {
           setItem(data);
@@ -75,7 +56,7 @@ const EditItem = ({ itemId }) => {
       event.preventDefault();
 
       try {
-          const response = await fetch('http://localhost:8000/EditItem', {
+          const response = await fetch('http://localhost:3000/EditItem', {
             method: "POST", 
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ id: itemId, ...item }) 
@@ -98,21 +79,15 @@ const EditItem = ({ itemId }) => {
     };
 
     return (
-      <Container>
-        <RegisterBox>
-          <Title>Edit Item</Title>
-          <p>Please fill in this form to edit the item.</p>
-          <form onSubmit={handleUpdate}>
-            <Label>Item Name</Label>
-            <InputField type="text" placeholder="Item Name" name="itemname" value={item.itemname} onChange={handleChange} />
-            <Label>Description</Label>
-            <InputField type="text" placeholder="Description" name="description" value={item.description} onChange={handleChange} />
-            <Label>Quantity</Label>
-            <InputField type="text" placeholder="Quantity" name="quantity" value={item.quantity} onChange={handleChange} />
-            <Button type="submit">Update</Button>
-          </form>
-        </RegisterBox>
-      </Container>
+      <EditBox>
+        <Title>Edit Item</Title>
+        <form onSubmit={handleUpdate}>
+          <InputField type="text" placeholder="Item Name" name="itemname" value={item.itemname} onChange={handleChange} />
+          <InputField type="text" placeholder="Description" name="description" value={item.description} onChange={handleChange} />
+          <InputField type="text" placeholder="Quantity" name="quantity" value={item.quantity} onChange={handleChange} />
+          <Button type="submit">Update</Button>
+        </form>
+      </EditBox>
     );
 };
 

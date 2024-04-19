@@ -1,12 +1,16 @@
 .inventory {
     font-size: 18px;
     font-weight: bold;
-    color: blue;
-
+    color: black;
 }
 
 .mainpage {
     font-size: 16px;
-    color: green;
+    color: black;
 
+}
+
+body {
+    background-image: url(https://loomwell.com/cdn/shop/files/Living_Room_HeroA_1400x.jpg?v=1653066567);
+    background-size: cover;
 }

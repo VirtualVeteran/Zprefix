@@ -125,14 +125,23 @@ app.patch('/inventory', async (req, res) => {
 });
 
 app.post('/EditItem', async (req, res) => {
+    const { id, itemname, description, quantity } = req.body;
+
     try {
-        await knex('inventory_stock').insert({ itemname, user_account_id, description, quantity });
-        res.status(201).send('Item edited successfully');
+        await knex('inventory_stock')
+            .where({ id: id }) 
+            .update({ 
+                itemname: itemname, 
+                description: description, 
+                quantity: quantity 
+            });
+        res.status(200).send('Item edited successfully');
     } catch (error) {
         console.error('Error editing item:', error);
         res.status(500).send('Failed to edit item');
     }
 });
+
 
 
 
