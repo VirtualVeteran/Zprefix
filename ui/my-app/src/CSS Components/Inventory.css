@@ -2,4 +2,6 @@ h5 {
     font-size: xx-large;
 }
 
-.edit {}
+.detail {
+    margin-top: 100px;
+}

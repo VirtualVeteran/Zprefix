@@ -10,6 +10,13 @@
 
 }
 
+p {
+    color: bisque;
+    font-size: xx-large;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 400;
+}
+
 body {
     background-image: url(https://loomwell.com/cdn/shop/files/Living_Room_HeroA_1400x.jpg?v=1653066567);
     background-size: cover;
