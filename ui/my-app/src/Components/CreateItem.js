@@ -56,38 +56,36 @@ const Container = styled.div`
 const CreateItem = () => {
   const [error, setError] = useState(null);
   const [newItem, setNewItem] = useState({
-    "Name": "",
-    "Description": "", 
-    "Quantity": ""
+    "itemname": "",
+    "description": "", 
+    "quantity": ""
   });
 
   const handleSignUp = async (event) => {
     event.preventDefault();
 
     try {
-        const response = await fetch('http://localhost:8000/inventory', {
-          method: "PATCH", 
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(newItem)
+      const response = await fetch('http://localhost:8000/inventory', {
+        method: "PATCH", 
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newItem)
+      });
+
+      if (response.status !== 201) {
+        throw new Error("Unable to create new item");
+      } else {
+        setNewItem({
+          itemname: "",
+          description: "",
+          quantity: ""
         });
-
-        if (response.status !== 201) {
-            throw new Error("Unable to create new item");
-        } else {
-            setNewItem({
-                itemname: "",
-                user_account_id: "", 
-                description: "",
-                quantity: ""
-            });
-            alert("Item creation successful");
-        }
+        alert("Item creation successful");
+      }
     } catch (error) {
-        console.error("Error creating item:", error);
-        alert("Item creation failed. Please try again.");
+      console.error("Error creating item:", error);
+      alert("Item creation failed. Please try again.");
     }
-};
-
+  };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -97,15 +95,15 @@ const CreateItem = () => {
   return (
     <Container>
       <RegisterBox>
-        <Title>Register</Title>
-        <p>Please fill in this form to create an account.</p>
+        <Title>Create Item</Title>
+        <p>Please fill in this form to create a new item.</p>
         <form onSubmit={handleSignUp}>
-          <Label>Name</Label>
-          <InputField type="text" placeholder="Name" name="Name" value={newItem.Name} onChange={handleChange} />
+          <Label>Item Name</Label>
+          <InputField type="text" placeholder="Item Name" name="itemname" value={newItem.itemname} onChange={handleChange} />
           <Label>Description</Label>
-          <InputField type="text" placeholder="Description" name="Description" value={newItem.Description} onChange={handleChange} />
+          <InputField type="text" placeholder="Description" name="description" value={newItem.description} onChange={handleChange} />
           <Label>Quantity</Label>
-          <InputField type="text" placeholder="Quantity" name="Quantity" value={newItem.Quantity} onChange={handleChange} />
+          <InputField type="text" placeholder="Quantity" name="quantity" value={newItem.quantity} onChange={handleChange} />
           <Button type="submit">Create</Button>
         </form>
       </RegisterBox>
