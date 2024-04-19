@@ -6,7 +6,7 @@ import EditItem from "./Components/EditInventory";
 
 const Inventory = () => {
     const [ items, setItems ] = useState([]);
-    const [showEditItem, setShowEditItem] = useState(false);
+    const [editItemId, setEditItemId] = useState(null);
 
 
     useEffect( () => {
@@ -19,30 +19,33 @@ const Inventory = () => {
     }, [])
 
     const handleEditItem = (itemId) => {
-        // Handle edit item logic here
-        console.log(`Editing item with id ${itemId}`);
+        setEditItemId(itemId);
     };
 
     return (
         <div>
-            <h1 style={{textAlign:'center'}}>Inventory</h1>
-            <Row>
-                {items.map(item => (
-                    <Col key={item.id} xs={3} style={{padding:'100px'}}>
-                        <Card className='item-card' style={{width: '150px', height: '200px'}}>
-                            <Card.Body style={{textAlign: 'center'}}>
-                                <h5>{item.itemname}</h5>
-                                <h6>{item.description}</h6>
-                                <h7>{item.quantity}</h7>
-                                <Button onClick={() => setShowEditItem(true)}>Edit</Button> 
-                                {showEditItem && <EditItem />}
-                            </Card.Body>
-                        </Card>
-                    </Col>
-                ))}
-            </Row>
-        </div>
-    )
+        <h1 style={{textAlign:'center'}}>Inventory</h1>
+        <Row>
+            {items.map(item => (
+                <Col key={item.id} xs={3} style={{padding:'100px'}}>
+                    <Card className='item-card' style={{width: '250px', height: '300px'}}>
+                        <Card.Body style={{textAlign: 'center'}}>
+                            <h5>{item.itemname}</h5>
+                            <h6>{item.description}</h6>
+                            <h7>{item.quantity}</h7>
+                            <div></div>
+                            {/* Pass the item ID to the handleEditItem function */}
+                            <Button className="edit" onClick={() => handleEditItem(item.id)}>Edit</Button> 
+                            {/* Render the EditItem component only if the item ID matches the editItemId */}
+                            {editItemId === item.id && <EditItem />}
+                        </Card.Body>
+                    </Card>
+                </Col>
+            ))}
+        </Row>
+    </div>
+)
 }
+
 
 export default Inventory;

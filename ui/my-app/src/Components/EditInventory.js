@@ -76,9 +76,9 @@ const EditItem = ({ itemId }) => {
 
       try {
           const response = await fetch('http://localhost:8000/EditItem', {
-            method: "POST", // Change method to POST
+            method: "POST", 
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ id: itemId, ...item }) // Include the item ID in the request payload
+            body: JSON.stringify({ id: itemId, ...item }) 
           });
 
           if (response.status !== 201) {
