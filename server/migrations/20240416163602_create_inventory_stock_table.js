@@ -2,10 +2,10 @@
 exports.up = function(knex) {
     return knex.schema.createTable('inventory_stock', table => {
       table.increments('');
-      table.string('itemname');
+      table.string('itemname').notNullable().unique();
       table.integer('user_account_id')
       table.string('description');
-      table.integer('quantity');
+      table.integer('quantity').notNullable().unique();
   });
 };
 

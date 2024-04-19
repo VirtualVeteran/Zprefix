@@ -57,7 +57,7 @@ const CreateItem = () => {
   const [error, setError] = useState(null);
   const [newItem, setNewItem] = useState({
     "Name": "",
-    "Description": "", // Corrected the key name
+    "Description": "", 
     "Quantity": ""
   });
 
@@ -66,9 +66,9 @@ const CreateItem = () => {
 
     try {
         const response = await fetch('http://localhost:8000/inventory', {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(newItem)
+          method: "PATCH", 
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(newItem)
         });
 
         if (response.status !== 201) {
