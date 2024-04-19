@@ -1,37 +1,38 @@
 import React, { useState } from 'react';
-import Cookies from 'js-cookie';
 
 const Login = () => {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
-
+    const [userData, setUserData] = useState({ username: '', password: '' });
+    const [error, setError] = useState(null);
+   
     const handleLogin = async () => {
         try {
-            const response = await fetch('/Login', {
+            const response = await fetch('http://localhost:3000/Login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username, password })
+                body: JSON.stringify(userData),
             });
-            if (response.ok) {
-                const data = await response.json();
-                Cookies.set('user', data.user); 
-                window.location.reload(); 
+            if (response.status === 201) {
+                alert('Login success');
+                window.location.href = 'http://localhost:3000/autenticatedview';
             } else {
-                const errorMessage = await response.text();
-                setError(errorMessage);
+                setError('User not found');
             }
         } catch (error) {
-            console.error('Error logging in:', error);
-            setError('An error occurred. Please try again later.');
+            setError('Failed to login. Please try again.');
+            console.error('Error:', error);
         }
     };
-
+  
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+        setUserData({ ...userData, [name]: value });
+    };
+  
     return (
         <div>
             <h1>Login</h1>
-            <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Username" />
-            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
+            <input type="text" value={userData.username} onChange={handleChange} name="username" placeholder="Username" />
+            <input type="password" value={userData.password} onChange={handleChange} name="password" placeholder="Password" />
             <button onClick={handleLogin}>Login</button>
             {error && <p>{error}</p>}
         </div>

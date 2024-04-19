@@ -6,14 +6,14 @@ const EditBox = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: rgba(255, 255, 255, 0.9); /* Background color with transparency */
+  background-color: rgba(255, 255, 255, 0.9);
   padding: 20px;
-  z-index: 1000; /* Ensure the edit box is above other elements */
+  z-index: 1000;
 `;
 
 const Title = styled.div`
   font-size: 20px;
-  color: #333; /* Change color as needed */
+  color: #333;
   margin-bottom: 10px;
 `;
 
@@ -35,60 +35,57 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
-const EditItem = ({ itemId }) => {
-    const [item, setItem] = useState({
-      itemname: '',
-      description: '',
-      quantity: ''
-    });
+const EditItem = ({ itemName }) => {
+  const [item, setItem] = useState({
+    description: '',
+    quantity: ''
+  });
 
-    useEffect(() => {
- 
-      fetch(`http://localhost:3000/EditItem/${itemId}`)
-        .then(res => res.json())
-        .then(data => {
-          setItem(data);
-        })
-        .catch(error => console.log(error));
-    }, [itemId]);
+  useEffect(() => {
+    fetch(`http://localhost:3000/EditItem/${encodeURIComponent(itemName)}`)
+      .then(res => res.json())
+      .then(data => {
+        setItem(data);
+      })
+      .catch(error => console.log(error));
+  }, [itemName]);
 
-    const handleUpdate = async (event) => {
-      event.preventDefault();
+  const handleUpdate = async (event) => {
+    event.preventDefault();
 
-      try {
-          const response = await fetch('http://localhost:3000/EditItem', {
-            method: "POST", 
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ id: itemId, ...item }) 
-          });
+    try {
+      const response = await fetch(`http://localhost:3000/EditItem/${encodeURIComponent(itemName)}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ description: item.description, quantity: item.quantity })
+      });
 
-          if (response.status !== 201) {
-              throw new Error("Unable to edit existing item");
-          } else {
-              alert("Item update successful");
-          }
-      } catch (error) {
-          console.error("Error editing item:", error);
-          alert("Item change failed. Please try again.");
+      if (response.status !== 200) {
+        throw new Error("Unable to edit existing item");
+      } else {
+        alert("Item update successful");
       }
-    };
-    
-    const handleChange = (event) => {
-      const { name, value } = event.target;
-      setItem({ ...item, [name]: value });
-    };
+    } catch (error) {
+      console.error("Error editing item:", error);
+      alert("Item change failed. Please try again.");
+    }
+  };
 
-    return (
-      <EditBox>
-        <Title>Edit Item</Title>
-        <form onSubmit={handleUpdate}>
-          <InputField type="text" placeholder="Item Name" name="itemname" value={item.itemname} onChange={handleChange} />
-          <InputField type="text" placeholder="Description" name="description" value={item.description} onChange={handleChange} />
-          <InputField type="text" placeholder="Quantity" name="quantity" value={item.quantity} onChange={handleChange} />
-          <Button type="submit">Update</Button>
-        </form>
-      </EditBox>
-    );
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setItem({ ...item, [name]: value });
+  };
+
+  return (
+    <EditBox>
+      <Title>Edit Item</Title>
+      <form onSubmit={handleUpdate}>
+        <InputField type="text" placeholder="Description" name="description" value={item.description} onChange={handleChange} />
+        <InputField type="text" placeholder="Quantity" name="quantity" value={item.quantity} onChange={handleChange} />
+        <Button type="submit">Update</Button>
+      </form>
+    </EditBox>
+  );
 };
 
 export default EditItem;

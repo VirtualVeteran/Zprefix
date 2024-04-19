@@ -5,6 +5,7 @@ import Mainpage from './Mainpage.js';
 import Login from './Components/Login.js';
 import CreateAccount from './AccountCreation.js';
 import './App.css';
+import AuthenticatedView from './AuthenticatedView.js';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/create-account" element={<CreateAccount />} />
           <Route path="/view-inventory" element={<ViewInventory />} />
           <Route path="/mainpage" element={<Mainpage />} />
+          <Route path="/authenticatedview" element={<AuthenticatedView />} />
         </Routes>
         <Link className='mainpage' to="/mainpage" style={{ color: "black" }}>Already have an account or need to make one?</Link>
         <div></div>

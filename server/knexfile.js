@@ -1,4 +1,5 @@
-// Update with your config settings.
+// Load environment variables from .env file
+require('dotenv').config();
 
 /**
  * @type { Object.<string, import("knex").Knex.Config> }
@@ -8,20 +9,20 @@ module.exports = {
   development: {
     client: 'pg',
     connection: {
-      host: '127.0.0.1',
-      password: 'docker',
-      user: 'postgres',
-      port: 5432,
-      database: 'inventory_database'
-
+      host: process.env.DB_HOST || '127.0.0.1',
+      user: process.env.DB_USER || 'postgres',
+      password: process.env.DB_PASSWORD || 'docker',
+      port: process.env.DB_PORT || 5432,
+      database: process.env.DB_DATABASE || 'inventory_database'
     }
   },
 
   staging: {
     client: 'pg',
     connection: {
+      host: process.env.DB_HOST,
       database: 'my_db',
-      user:     'username',
+      user: 'username',
       password: 'password'
     },
     pool: {
@@ -36,8 +37,9 @@ module.exports = {
   production: {
     client: 'pg',
     connection: {
+      host: process.env.DB_HOST,
       database: 'my_db',
-      user:     'username',
+      user: 'username',
       password: 'password'
     },
     pool: {

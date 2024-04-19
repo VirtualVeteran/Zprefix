@@ -2,28 +2,31 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const RegisterBox = styled.div`
-  text-align:center;
-  border: 2px solid;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  z-index: 1000; /* Ensure the box appears above other elements */
+  text-align: center;
+  border: 2px solid;
   color: white;
   padding: 20px;
+  background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
 `;
 
 const Title = styled.div`
-  font-size:20px;
-  color:white;
+  font-size: 20px;
+  color: white;
+  margin-bottom: 10px;
 `;
 
 const Label = styled.div`
-  font-size:15px;
-  display:flex;
-  width:24%;
-  text-align:left;
+  font-size: 15px;
+  display: flex;
+  width: 24%;
+  text-align: left;
   padding-left: 10px;
-  color:white;
+  color: white;
 `;
 
 const InputField = styled.input`
@@ -47,8 +50,9 @@ const Button = styled.button`
 `;
 
 const Container = styled.div`
+  position: relative;
   text-align: left;
-  background-color: #1F003E;
+  background-color: #1f003e;
   color: white;
   border: 20px solid;
 `;
@@ -56,9 +60,9 @@ const Container = styled.div`
 const CreateItem = () => {
   const [error, setError] = useState(null);
   const [newItem, setNewItem] = useState({
-    "itemname": "",
-    "description": "", 
-    "quantity": ""
+    itemname: '',
+    description: '', 
+    quantity: ''
   });
 
   const handleSignUp = async (event) => {
