@@ -6,6 +6,8 @@ import EditItem from "./Components/EditInventory";
 
 const Inventory = () => {
     const [ items, setItems ] = useState([]);
+    const [showEditItem, setShowEditItem] = useState(false);
+
 
     useEffect( () => {
         fetch('http://localhost:8000/inventory')
@@ -32,7 +34,8 @@ const Inventory = () => {
                                 <h5>{item.itemname}</h5>
                                 <h6>{item.description}</h6>
                                 <h7>{item.quantity}</h7>
-                                <Button onClick={() => handleEditItem(item.id)}>Edit</Button>
+                                <Button onClick={() => setShowEditItem(true)}>Edit</Button> 
+                                {showEditItem && <EditItem />}
                             </Card.Body>
                         </Card>
                     </Col>

@@ -7,12 +7,16 @@ import CreateAccount from './AccountCreation.js';
 function App() {
   return (
     <Router>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/create-account" element={<CreateAccount />} />
-        <Route path="/homepage" element={<Homepage />} />
-      </Routes>
-      <Link to="/homepage" style={{ color: "black" }}>Just visiting? View Our Inventory Here!</Link>
+      <div>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/create-account" element={<CreateAccount />} />
+          <Route path="/homepage" element={<Homepage />} />
+        </Routes>
+        <Route path="/*" element={<Login />} />
+        <Route path="/*" element={<CreateAccount />} />
+        <Link to="/homepage" style={{ color: "black" }}>Just visiting? View Our Inventory Here!</Link>
+      </div>
     </Router>
   );
 }
