@@ -113,10 +113,10 @@ app.post('/inventory', async (req, res) => {
 });
 
 
-
 app.patch('/inventory', async (req, res) => {
+    const { itemname, description, quantity } = req.body;
     try {
-        await knex('inventory_stock').insert({ itemname, user_account_id, description, quantity });
+        await knex('inventory_stock').insert({ itemname, description, quantity });
         res.status(201).send('Item created successfully');
     } catch (error) {
         console.error('Error creating item:', error);
